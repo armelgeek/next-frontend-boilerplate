@@ -1330,3 +1330,363 @@ npm run task:report
 - Génère un fichier individuel par tâche lors de `npm run task:files`.
 - Pour chaque fichier de tâche, structure systématiquement les sections Implementation Details, Test Strategy, Subtasks.
 - Permet une gestion fine du projet, du setup à la documentation, en passant par le front et le back.
+
+## 🚀 Système de Génération Front-Office Automatisé
+
+**Le projet intègre maintenant un système complet de génération d'entités front-office avec CRUD, recherche, pagination et gestion d'état.**
+
+### 📋 Commande de génération
+
+```bash
+npm run generate:entity
+```
+
+### 🎯 Fonctionnalités générées automatiquement
+
+#### 1. **Structure de base**
+- ✅ Schéma Zod avec validation TypeScript
+- ✅ Service API basé sur `BaseService`
+- ✅ Hooks React Query pour données et actions
+- ✅ Service mock avec persistance localStorage (optionnel)
+- ✅ Configuration API automatique dans `shared/config/api.ts`
+
+#### 2. **Pages automatiques**
+- ✅ Page de liste avec recherche et pagination (`/entities`)
+- ✅ Page de détail responsive (`/entities/[id]`)
+- ✅ Pages de création/édition avec formulaires (`/entities/create`, `/entities/[id]/edit`)
+- ✅ Layout dédié pour la section
+
+#### 3. **Composants génériques réutilisables**
+- ✅ `EntityCard` - Carte d'affichage d'entité
+- ✅ `EntityList` - Liste avec gestion des états
+- ✅ `EntitySearch` - Recherche avec debounce
+- ✅ `EntityPagination` - Pagination complète
+- ✅ `EntityForm` - Formulaire générique avec validation Zod
+- ✅ `EntityFilters` - Filtres avancés avec dropdown
+- ✅ `SortableHeader` - En-têtes de colonnes triables
+- ✅ `EntityPage` - Template de page de liste
+- ✅ `EntityDetailPage` - Template de page de détail
+
+#### 4. **Hooks génériques factorisés**
+- ✅ `useEntityList` - Liste d'entités avec caching React Query
+- ✅ `useEntityDetail` - Détail d'une entité par ID
+- ✅ `useEntitySearch` - Recherche avec filtres
+- ✅ `useEntityActions` - Actions CRUD avec toasts automatiques
+- ✅ `useEntityListParams` - Synchronisation paramètres URL ↔ état
+- ✅ `useEntityStore` - État global par entité (sélection, vue, etc.)
+
+#### 5. **Fonctionnalités avancées**
+- ✅ Synchronisation des paramètres avec l'URL (search, page, sort, filtres)
+- ✅ Tri des colonnes bidirectionnel
+- ✅ Filtres avancés (select, text, number, date)
+- ✅ Sélection multiple d'éléments
+- ✅ Modes d'affichage (grid, list, table)
+- ✅ Validation de formulaires automatique avec Zod
+- ✅ Gestion des états de chargement et d'erreur
+- ✅ Toasts automatiques pour toutes les actions
+
+### 🛠️ Workflow de génération
+
+1. **Génération d'entité** : `npm run generate:entity`
+2. **Personnalisation du schéma** : Modifier `features/[entity]/[entity].schema.ts`
+3. **Configuration des mocks** : Adapter `features/[entity]/[entity].mock.ts`
+4. **Test en mode offline** : Utiliser le service mock pour développer l'UI
+5. **Basculer vers l'API** : Changer l'import dans les hooks quand l'API est prête
+
+### 📁 Structure générée type
+
+```
+features/product/
+├── product.schema.ts          # Schéma Zod + types TypeScript
+├── product.service.ts         # Service API réel (BaseService)
+├── product.mock.ts           # Service mock avec persistance (optionnel)
+└── hooks/
+    └── use-product.ts        # Tous les hooks React Query
+
+app/(root)/products/
+├── layout.tsx               # Layout de section
+├── page.tsx                # Page de liste avec filtres avancés
+├── create/
+│   └── page.tsx            # Page de création
+└── [id]/
+    ├── page.tsx            # Page de détail
+    └── edit/
+        └── page.tsx        # Page d'édition
+```
+
+### 🎨 URLs générées automatiquement
+
+- **Liste** : `/products` (avec search, filtres, pagination dans l'URL)
+- **Création** : `/products/create`
+- **Détail** : `/products/[id]`
+- **Édition** : `/products/[id]/edit`
+- **API** : `/api/v1/product/*` (configuré automatiquement dans `API_ENDPOINTS`)
+
+### 💡 Avantages du système
+
+- **Productivité** : Génération complète en 2 minutes vs développement manuel en heures
+- **Cohérence** : Tous les composants suivent les mêmes patterns et conventions
+- **Maintenabilité** : Code factorisé et réutilisable
+- **Flexibilité** : Entièrement personnalisable après génération
+- **Robustesse** : Gestion automatique des erreurs, validation, états de chargement
+- **Offline-first** : Mode mock pour développer sans backend
+- **Type-safe** : Validation Zod + TypeScript bout en bout
+
+### 🔧 Personnalisation recommandée
+
+Après génération, personnalisez selon vos besoins :
+
+```typescript
+// 1. Enrichir le schéma Zod
+export const ProductSchema = z.object({
+  id: z.string(),
+  name: z.string().min(1, 'Le nom est requis'),
+  price: z.number().min(0, 'Le prix doit être positif'),
+  category: z.string(),
+  image: z.string().url().optional(),
+  // ...autres champs métier
+});
+
+// 2. Configurer les filtres de liste
+const filterOptions: FilterOption[] = [
+  {
+    key: 'category',
+    label: 'Catégorie',
+    type: 'select',
+    options: [
+      { value: 'electronics', label: 'Électronique' },
+      { value: 'clothing', label: 'Vêtements' },
+    ],
+  },
+];
+
+// 3. Personnaliser l'affichage des cartes
+<EntityPage
+  renderCard={(product) => (
+    <ProductCard product={product} />
+  )}
+/>
+```
+
+---
+
+## 🎯 **Nouveaux Systèmes d'Automatisation Avancés**
+
+### **1. 🧭 Navigation Builder - Générateur de Menus & Layouts**
+
+**Génère automatiquement des systèmes de navigation complexes avec permissions et responsive design.**
+
+#### Fonctionnalités principales :
+- ✅ Sidebars administrateur et client avec icônes
+- ✅ Headers responsive avec dropdowns
+- ✅ Breadcrumbs automatiques basés sur l'URL
+- ✅ Navigation conditionnelle par rôles/permissions
+- ✅ Templates prédéfinis (admin, client, mobile)
+- ✅ Support des badges et notifications
+
+#### Utilisation :
+```typescript
+import { NavigationGenerator, NavigationTemplates } from '@/shared/lib/generators/navigation-generator';
+
+// Configuration de navigation admin
+const adminNav = NavigationGenerator.createNavigationConfig(
+  'Administration',
+  'sidebar',
+  [
+    { key: 'dashboard', label: 'Dashboard', href: '/admin', icon: 'LayoutDashboard' },
+    { key: 'users', label: 'Utilisateurs', href: '/admin/users', icon: 'Users', badge: 'NEW' },
+    {
+      key: 'content',
+      label: 'Contenu',
+      href: '/admin/content',
+      icon: 'FileText',
+      children: [
+        { key: 'posts', label: 'Articles', href: '/admin/content/posts' },
+        { key: 'categories', label: 'Catégories', href: '/admin/content/categories' },
+      ],
+    },
+  ],
+  { collapsible: true, searchable: true }
+);
+
+// Génération de breadcrumbs automatique
+const breadcrumbs = NavigationGenerator.generateBreadcrumbs(pathname, {
+  '/admin': 'Administration',
+  '/admin/users': 'Utilisateurs',
+  '/admin/content': 'Contenu',
+});
+
+// Filtrage par permissions
+const userNav = NavigationGenerator.filterNavigationByPermissions(
+  adminNav.items,
+  userPermissions
+);
+```
+
+### **2. 📋 Form Builder Avancé - Formulaires Multi-Étapes & Conditionnels**
+
+**Système complet de génération de formulaires avec validation, étapes, champs conditionnels et auto-save.**
+
+#### Fonctionnalités principales :
+- ✅ Formulaires multi-étapes avec validation progressive
+- ✅ Champs conditionnels basés sur d'autres valeurs
+- ✅ Validation Zod intégrée avec messages personnalisés
+- ✅ Auto-save et sauvegarde de brouillons
+- ✅ Templates prédéfinis (contact, commande, inscription, profil)
+- ✅ Layouts adaptatifs (simple, sections, steps, tabs)
+
+#### Utilisation :
+```typescript
+import { FormGenerator, FormTemplates } from '@/shared/lib/generators/form-builder-generator';
+
+// Formulaire de commande multi-étapes
+const orderForm = FormGenerator.generateOrderForm();
+
+// Formulaire personnalisé avec champs conditionnels
+const customForm = {
+  id: 'custom',
+  title: 'Formulaire Personnalisé',
+  layout: 'steps',
+  fields: [
+    FormGenerator.createField('deliveryType', 'radio', 'Type de livraison', {
+      options: [
+        { value: 'standard', label: 'Standard' },
+        { value: 'express', label: 'Express' },
+      ],
+    }),
+    FormGenerator.createField('address', 'textarea', 'Adresse', {
+      conditions: {
+        show: [{ field: 'deliveryType', operator: 'not_equals', value: 'pickup' }],
+      },
+    }),
+  ],
+  steps: [
+    FormGenerator.createStep('delivery', 'Livraison', ['deliveryType', 'address']),
+  ],
+};
+
+// Hook pour conditions de champs
+const showField = useFieldConditions(field.conditions?.show, formData);
+```
+
+### **3. 🔔 Notification System Builder - Système de Notifications Unifié**
+
+**Système centralisé pour gérer toutes les notifications (toasts, modals, banners, badges) avec templates métier.**
+
+#### Fonctionnalités principales :
+- ✅ Types de notifications : success, error, warning, info, loading
+- ✅ Variants : toast, banner, modal, inline, popup, badge, alert
+- ✅ Actions personnalisées avec confirmations
+- ✅ Templates métier (CRUD, auth, système, formulaires)
+- ✅ Persistence et historique des notifications
+- ✅ Configuration par type et variant
+
+#### Utilisation :
+```typescript
+import { NotificationGenerator, NotificationTemplates } from '@/shared/lib/generators/notification-generator';
+
+// Notifications simples
+const successNotif = NotificationGenerator.success('Opération réussie');
+const errorNotif = NotificationGenerator.error('Erreur survenue', { persistent: true });
+
+// Notifications avec actions
+const confirmNotif = NotificationGenerator.confirmation(
+  'Supprimer cet élément ?',
+  'Cette action est irréversible.',
+  () => deleteItem()
+);
+
+// Templates métier
+const crudNotifs = NotificationTemplates.crud;
+const authNotifs = NotificationTemplates.auth;
+const systemNotifs = NotificationTemplates.system;
+
+// Notification de session expirée avec action
+const sessionExpired = NotificationTemplates.auth.sessionExpired();
+
+// Notification de maintenance système
+const maintenance = NotificationTemplates.system.maintenance('2 heures');
+```
+
+### **4. 🎨 Layout Builder - Générateur de Layouts & Grilles**
+
+**Système de génération de layouts complexes avec grilles responsives, sidebars et sections automatiques.**
+
+#### Fonctionnalités principales :
+- ✅ Grilles responsives avec breakpoints
+- ✅ Layouts flexbox avec alignement avancé
+- ✅ Sidebars collapsibles et positionnables
+- ✅ Sections hero, cards, formulaires
+- ✅ Templates de pages complètes (dashboard, landing, blog, e-commerce)
+- ✅ Animation et conditional rendering
+
+#### Utilisation :
+```typescript
+import { LayoutGenerator, LayoutTemplates } from '@/shared/lib/generators/layout-generator';
+
+// Layout dashboard complet
+const dashboardLayout = LayoutGenerator.createDashboardLayout(
+  'dashboard',
+  LayoutGenerator.createCard('nav-sidebar', 'Navigation'),
+  LayoutGenerator.createCard('header', 'Header'),
+  LayoutGenerator.createCard('dashboard-content', 'Dashboard Content')
+);
+
+// Grille responsive simple
+const productGrid = LayoutGenerator.createGrid(
+  'products-grid',
+  { mobile: 1, tablet: 2, desktop: 3, wide: 4 },
+  [
+    LayoutGenerator.createCard('product-1', 'Product 1'),
+    LayoutGenerator.createCard('product-2', 'Product 2'),
+  ]
+);
+
+// Hero section avec background
+const heroSection = LayoutGenerator.createHero('hero', 'Hero Content', {
+  properties: {
+    heroHeight: { mobile: '400px', desktop: '600px' },
+    heroBackground: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+  },
+});
+
+// Layout e-commerce avec sidebar filtres
+const ecommerceLayout = LayoutGenerator.createEcommerceLayout('ecommerce');
+
+// Responsive utilities
+const responsiveValue = ResponsiveUtility.createResponsiveValue(
+  '100%',    // mobile
+  '50%',     // tablet
+  '33.33%',  // desktop
+  '25%'      // wide
+);
+```
+
+---
+
+## 🛡️ **Instructions d'Utilisation pour l'IA**
+
+### **Quand utiliser chaque générateur :**
+
+1. **Navigation Builder** : Pour toute nouvelle section nécessitant une navigation (admin, client, mobile)
+2. **Form Builder** : Pour des formulaires complexes (commandes, inscriptions, profils, questionnaires)
+3. **Notification System** : Pour standardiser tous les messages utilisateur dans l'app
+4. **Layout Builder** : Pour créer de nouvelles pages avec layouts responsives
+
+### **Workflow recommandé :**
+
+1. **Analyser le besoin** : Identifier quel(s) générateur(s) utiliser
+2. **Générer la base** : Utiliser les templates prédéfinis comme point de départ
+3. **Personnaliser** : Adapter selon les besoins spécifiques
+4. **Tester** : Vérifier la responsivité et l'accessibilité
+5. **Documenter** : Ajouter des exemples d'usage dans les composants
+
+### **Bonnes pratiques :**
+
+- **Toujours commencer par les templates** existants avant de créer du custom
+- **Respecter les conventions** de nommage et de structure
+- **Tester sur mobile, tablet et desktop** pour la responsivité
+- **Valider l'accessibilité** (ARIA, focus, contraste)
+- **Documenter les personnalisations** pour la maintenance
+
+---

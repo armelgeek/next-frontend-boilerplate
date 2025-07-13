@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
+    "generate:entity": "node scripts/generate-front-entity.js",
     "task:init": "node scripts/taskmaster.js init",
     "task:generate-prd": "node scripts/taskmaster.js generate-prd",
     "task:generate": "node scripts/taskmaster.js generate-nextjs-tasks",

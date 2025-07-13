@@ -2,7 +2,7 @@ import React from 'react';
 import { Toaster } from '@/shared/components/atoms/ui/sonner';
 import { Provider } from '@/shared/providers';
 import NextTopLoader from 'nextjs-toploader';
-import {  Livvic } from 'next/font/google';
+import { Livvic } from 'next/font/google';
 import '@/shared/styles/globals.css';
 
 const spaceGrotesk = Livvic({
@@ -18,14 +18,15 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${spaceGrotesk.variable} font-space-grotesk`}>
         <NextTopLoader showSpinner={true} />
         <Provider>
-              {children}
+          {children}
         </Provider>
+
         <Toaster richColors />
       </body>
     </html>
