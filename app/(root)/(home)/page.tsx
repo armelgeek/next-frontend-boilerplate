@@ -1,3 +1,4 @@
+import UniversalCardExamples from '@/shared/components/examples/universal-card-examples';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,7 +11,7 @@ export default function Home() {
 
   return (
     <div className='h-screen flex items-center justify-center'>
-    
+      <UniversalCardExamples />
     </div>
   );
 }
