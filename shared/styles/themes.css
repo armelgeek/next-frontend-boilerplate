@@ -1,0 +1,668 @@
+/**
+ * Styles CSS globaux pour les thèmes de navbar
+ * Variables CSS personnalisées et classes utilitaires
+ */
+
+/* Variables CSS de base - seront écrasées par le ThemeProvider */
+:root {
+  --primary: 222 84% 55%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 84% 45%;
+  --background: 0 0% 100%;
+  --foreground: 222 84% 5%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 84% 5%;
+  --accent: 210 40% 96%;
+  --accent-foreground: 222 84% 45%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 222 84% 55%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 48 96% 89%;
+  --success: 142 76% 36%;
+  --success-foreground: 355 100% 97%;
+
+  /* Variables d'animation */
+  --animation-duration: 150ms;
+  --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Variables de police */
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: JetBrains Mono, monospace;
+}
+
+/* Classes thématiques pour chaque variant */
+
+/* Thème Default */
+.theme-default {
+  --primary: 222 84% 55%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 210 40% 96%;
+  --secondary-foreground: 222 84% 45%;
+  --background: 0 0% 100%;
+  --foreground: 222 84% 5%;
+}
+
+/* Thème Glassmorphism */
+.theme-glassmorphism {
+  --primary: 280 100% 70%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: rgba(255, 255, 255, 0.1);
+  --secondary-foreground: 0 0% 100%;
+  --background: rgba(255, 255, 255, 0.05);
+  --foreground: 0 0% 100%;
+  --card: rgba(255, 255, 255, 0.1);
+  --card-foreground: 0 0% 100%;
+  --glass-opacity: 0.1;
+  --glass-blur: 12px;
+  --glass-border: rgba(255, 255, 255, 0.2);
+}
+
+.theme-glassmorphism::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, 
+    hsl(280, 100%, 70%), 
+    hsl(320, 100%, 60%), 
+    hsl(220, 100%, 60%)
+  );
+  z-index: -1;
+  opacity: 0.8;
+}
+
+/* Thème Dark */
+.theme-dark {
+  --primary: 210 40% 98%;
+  --primary-foreground: 222 84% 5%;
+  --secondary: 217 19% 15%;
+  --secondary-foreground: 210 40% 98%;
+  --background: 222 84% 5%;
+  --foreground: 210 40% 98%;
+  --card: 222 84% 5%;
+  --card-foreground: 210 40% 98%;
+  --border: 217 19% 15%;
+}
+
+/* Thème Neon */
+.theme-neon {
+  --primary: 120 100% 50%;
+  --primary-foreground: 222 84% 5%;
+  --secondary: 222 84% 5%;
+  --secondary-foreground: 120 100% 50%;
+  --background: 222 84% 5%;
+  --foreground: 120 100% 50%;
+  --card: 222 84% 5%;
+  --card-foreground: 120 100% 50%;
+  --neon-glow: 0 0 10px hsl(120, 100%, 50%);
+  --neon-pulse: pulse 2s infinite;
+}
+
+.theme-neon {
+  background: radial-gradient(circle at center, 
+    rgba(0, 255, 0, 0.1) 0%, 
+    rgba(0, 0, 0, 0.9) 100%
+  );
+}
+
+/* Animation pour le thème neon */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.theme-neon .neon-glow {
+  box-shadow: var(--neon-glow);
+  animation: var(--neon-pulse);
+}
+
+/* Thème Retro */
+.theme-retro {
+  --primary: 25 95% 53%;
+  --primary-foreground: 33 92% 18%;
+  --secondary: 33 92% 18%;
+  --secondary-foreground: 25 95% 53%;
+  --background: 33 100% 85%;
+  --foreground: 33 92% 18%;
+  --card: 33 100% 90%;
+  --card-foreground: 33 92% 18%;
+  --retro-shadow: 4px 4px 0 hsl(33, 92%, 18%);
+  --retro-border: 4px solid hsl(33, 92%, 18%);
+  --font-sans: Bungee, cursive;
+}
+
+.theme-retro * {
+  border-radius: 0 !important;
+}
+
+.theme-retro .retro-shadow {
+  box-shadow: var(--retro-shadow);
+}
+
+.theme-retro button,
+.theme-retro .btn {
+  box-shadow: var(--retro-shadow);
+  border: var(--retro-border);
+  transition: transform 100ms ease-out;
+}
+
+.theme-retro button:hover,
+.theme-retro .btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 hsl(33, 92%, 18%);
+}
+
+.theme-retro button:active,
+.theme-retro .btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 hsl(33, 92%, 18%);
+}
+
+/* Nouveaux thèmes pour secteurs spécialisés */
+
+/* Travel Theme */
+.theme-travel {
+  --primary: 200 85% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 200 30% 85%;
+  --secondary-foreground: 200 85% 30%;
+  --background: 200 30% 98%;
+  --foreground: 200 50% 15%;
+  --card: 0 0% 100%;
+  --card-foreground: 200 50% 15%;
+  --accent: 35 90% 55%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 200 30% 92%;
+  --muted-foreground: 200 20% 50%;
+  --border: 200 30% 85%;
+  --input: 200 30% 95%;
+  --ring: 200 85% 50%;
+  --destructive: 0 75% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 35 90% 55%;
+  --warning-foreground: 200 50% 15%;
+  --success: 150 70% 40%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Nunito", system-ui, sans-serif;
+}
+
+/* Finance Theme */
+.theme-finance {
+  --primary: 210 70% 35%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 210 15% 88%;
+  --secondary-foreground: 210 70% 25%;
+  --background: 210 15% 98%;
+  --foreground: 210 30% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 210 30% 12%;
+  --accent: 140 60% 40%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 210 15% 93%;
+  --muted-foreground: 210 15% 45%;
+  --border: 210 15% 85%;
+  --input: 210 15% 96%;
+  --ring: 210 70% 35%;
+  --destructive: 0 75% 45%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 45 85% 50%;
+  --warning-foreground: 210 30% 12%;
+  --success: 140 60% 40%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Roboto", system-ui, sans-serif;
+}
+
+/* Education Theme */
+.theme-education {
+  --primary: 210 80% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 45 70% 85%;
+  --secondary-foreground: 210 80% 30%;
+  --background: 45 70% 98%;
+  --foreground: 210 40% 15%;
+  --card: 0 0% 100%;
+  --card-foreground: 210 40% 15%;
+  --accent: 270 60% 55%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 45 50% 92%;
+  --muted-foreground: 210 20% 50%;
+  --border: 45 50% 85%;
+  --input: 45 50% 95%;
+  --ring: 210 80% 50%;
+  --destructive: 0 75% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 35 90% 55%;
+  --warning-foreground: 210 40% 15%;
+  --success: 140 70% 45%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Open Sans", system-ui, sans-serif;
+}
+
+/* Creative Theme */
+.theme-creative {
+  --primary: 300 80% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 50 90% 80%;
+  --secondary-foreground: 300 80% 30%;
+  --background: 50 90% 98%;
+  --foreground: 300 50% 15%;
+  --card: 0 0% 100%;
+  --card-foreground: 300 50% 15%;
+  --accent: 180 70% 50%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 50 70% 92%;
+  --muted-foreground: 300 30% 50%;
+  --border: 50 70% 85%;
+  --input: 50 70% 95%;
+  --ring: 300 80% 60%;
+  --destructive: 0 75% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 40 90% 60%;
+  --warning-foreground: 300 50% 15%;
+  --success: 140 70% 50%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Poppins", system-ui, sans-serif;
+}
+
+.theme-creative .creative-bounce {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0,0,0);
+  }
+  40%, 43% {
+    transform: translate3d(0,-30px,0);
+  }
+  70% {
+    transform: translate3d(0,-15px,0);
+  }
+  90% {
+    transform: translate3d(0,-4px,0);
+  }
+}
+
+/* Agency Theme */
+.theme-agency {
+  --primary: 0 0% 10%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 92%;
+  --secondary-foreground: 0 0% 10%;
+  --background: 0 0% 100%;
+  --foreground: 0 0% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  --accent: 350 85% 55%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  --border: 0 0% 88%;
+  --input: 0 0% 98%;
+  --ring: 0 0% 10%;
+  --destructive: 0 85% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 40 90% 55%;
+  --warning-foreground: 0 0% 10%;
+  --success: 140 70% 45%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Montserrat", system-ui, sans-serif;
+}
+
+.theme-agency .agency-sharp {
+  clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
+}
+
+/* SaaS Theme */
+.theme-saas {
+  --primary: 260 85% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 260 25% 90%;
+  --secondary-foreground: 260 85% 25%;
+  --background: 260 25% 98%;
+  --foreground: 260 40% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 260 40% 12%;
+  --accent: 190 80% 55%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 260 25% 94%;
+  --muted-foreground: 260 20% 45%;
+  --border: 260 25% 87%;
+  --input: 260 25% 96%;
+  --ring: 260 85% 60%;
+  --destructive: 0 80% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 40 90% 60%;
+  --warning-foreground: 260 40% 12%;
+  --success: 150 75% 45%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* Portfolio Theme */
+.theme-portfolio {
+  --primary: 200 70% 40%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 40 60% 88%;
+  --secondary-foreground: 200 70% 20%;
+  --background: 40 60% 97%;
+  --foreground: 200 40% 15%;
+  --card: 0 0% 100%;
+  --card-foreground: 200 40% 15%;
+  --accent: 320 70% 55%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 40 40% 92%;
+  --muted-foreground: 200 25% 50%;
+  --border: 40 40% 85%;
+  --input: 40 40% 95%;
+  --ring: 200 70% 40%;
+  --destructive: 0 75% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 35 85% 55%;
+  --warning-foreground: 200 40% 15%;
+  --success: 140 70% 45%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Source Sans Pro", system-ui, sans-serif;
+}
+
+/* Blog Theme */
+.theme-blog {
+  --primary: 220 60% 50%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 50 50% 88%;
+  --secondary-foreground: 220 60% 25%;
+  --background: 50 50% 98%;
+  --foreground: 220 40% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 40% 12%;
+  --accent: 30 80% 55%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 50 40% 93%;
+  --muted-foreground: 220 25% 45%;
+  --border: 50 40% 87%;
+  --input: 50 40% 96%;
+  --ring: 220 60% 50%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 40 85% 55%;
+  --warning-foreground: 220 40% 12%;
+  --success: 140 65% 45%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Lato", system-ui, sans-serif;
+}
+
+/* E-commerce Theme */
+.theme-ecommerce {
+  --primary: 160 80% 35%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 25 70% 85%;
+  --secondary-foreground: 160 80% 20%;
+  --background: 25 70% 98%;
+  --foreground: 160 40% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 160 40% 12%;
+  --accent: 15 85% 55%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 25 50% 93%;
+  --muted-foreground: 160 25% 45%;
+  --border: 25 50% 87%;
+  --input: 25 50% 96%;
+  --ring: 160 80% 35%;
+  --destructive: 0 75% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 35 90% 55%;
+  --warning-foreground: 160 40% 12%;
+  --success: 160 80% 35%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Roboto", system-ui, sans-serif;
+}
+
+.theme-ecommerce .ecommerce-cart-bounce {
+  animation: cartBounce 0.6s ease-in-out;
+}
+
+@keyframes cartBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Magazine Theme */
+.theme-magazine {
+  --primary: 0 0% 15%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 85%;
+  --secondary-foreground: 0 0% 15%;
+  --background: 0 0% 98%;
+  --foreground: 0 0% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  --accent: 350 75% 50%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 0 0% 92%;
+  --muted-foreground: 0 0% 45%;
+  --border: 0 0% 88%;
+  --input: 0 0% 96%;
+  --ring: 0 0% 15%;
+  --destructive: 0 75% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 40 85% 55%;
+  --warning-foreground: 0 0% 10%;
+  --success: 140 65% 45%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Georgia", serif;
+}
+
+.theme-magazine .magazine-serif {
+  font-family: "Times", serif;
+  font-weight: 400;
+}
+
+/* Mobile App Theme */
+.theme-app {
+  --primary: 240 100% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 30% 90%;
+  --secondary-foreground: 240 100% 30%;
+  --background: 240 30% 98%;
+  --foreground: 240 50% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 50% 12%;
+  --accent: 300 80% 60%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 240 30% 94%;
+  --muted-foreground: 240 25% 45%;
+  --border: 240 30% 87%;
+  --input: 240 30% 96%;
+  --ring: 240 100% 60%;
+  --destructive: 0 80% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 40 90% 60%;
+  --warning-foreground: 240 50% 12%;
+  --success: 150 75% 45%;
+  --success-foreground: 0 0% 100%;
+  font-family: "SF Pro Display", system-ui, sans-serif;
+}
+
+.theme-app .app-rounded {
+  border-radius: 1rem;
+}
+
+.theme-app .app-smooth {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Classes utilitaires pour les effets de thème */
+.glass-effect {
+  backdrop-filter: blur(var(--glass-blur, 12px));
+  background: var(--glass-background, rgba(255, 255, 255, 0.1));
+  border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
+}
+
+.neon-glow {
+  box-shadow: var(--neon-glow, 0 0 10px currentColor);
+}
+
+.neon-pulse {
+  animation: var(--neon-pulse, pulse 2s infinite);
+}
+
+.retro-shadow {
+  box-shadow: var(--retro-shadow, 4px 4px 0 currentColor);
+}
+
+.theme-transition {
+  transition: all var(--animation-duration, 150ms) var(--animation-easing, ease);
+}
+
+/* Responsive helpers */
+@media (max-width: 768px) {
+  .theme-glassmorphism {
+    --glass-blur: 8px;
+  }
+  
+  .theme-retro {
+    --retro-shadow: 2px 2px 0 hsl(33, 92%, 18%);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .theme-glassmorphism {
+    --glass-opacity: 0.2;
+    --glass-border: rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .neon-pulse,
+  .theme-transition {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .theme-dark,
+  .theme-neon,
+  .theme-glassmorphism {
+    --background: 255 255 255;
+    --foreground: 0 0 0;
+    --card: 255 255 255;
+    --card-foreground: 0 0 0;
+  }
+  
+  .glass-effect,
+  .neon-glow,
+  .retro-shadow {
+    backdrop-filter: none;
+    box-shadow: none;
+    background: white;
+    border: 1px solid black;
+  }
+}
+
+/* Tech Theme */
+.theme-tech {
+  --primary: 195 100% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 215 25% 85%;
+  --secondary-foreground: 195 100% 25%;
+  --background: 215 25% 98%;
+  --foreground: 215 50% 12%;
+  --card: 0 0% 100%;
+  --card-foreground: 215 50% 12%;
+  --accent: 285 80% 60%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 215 25% 93%;
+  --muted-foreground: 215 25% 45%;
+  --border: 215 25% 87%;
+  --input: 215 25% 96%;
+  --ring: 195 100% 45%;
+  --destructive: 0 80% 55%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 40 90% 60%;
+  --warning-foreground: 215 50% 12%;
+  --success: 150 75% 45%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Roboto", system-ui, sans-serif;
+}
+
+.theme-tech .tech-glow {
+  box-shadow: 0 0 20px hsl(195, 100%, 45%);
+}
+
+/* Luxury Theme */
+.theme-luxury {
+  --primary: 45 90% 35%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 25 15% 85%;
+  --secondary-foreground: 45 90% 20%;
+  --background: 25 15% 98%;
+  --foreground: 25 30% 8%;
+  --card: 0 0% 100%;
+  --card-foreground: 25 30% 8%;
+  --accent: 345 70% 45%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 25 15% 93%;
+  --muted-foreground: 25 15% 40%;
+  --border: 25 15% 87%;
+  --input: 25 15% 96%;
+  --ring: 45 90% 35%;
+  --destructive: 0 75% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 40 85% 55%;
+  --warning-foreground: 25 30% 8%;
+  --success: 140 65% 45%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Playfair Display", serif;
+}
+
+.theme-luxury .luxury-elegant {
+  background: linear-gradient(135deg, hsl(45, 90%, 35%) 0%, hsl(345, 70%, 45%) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Minimal Theme */
+.theme-minimal {
+  --primary: 0 0% 20%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 0 0% 95%;
+  --secondary-foreground: 0 0% 20%;
+  --background: 0 0% 100%;
+  --foreground: 0 0% 10%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 10%;
+  --accent: 210 80% 50%;
+  --accent-foreground: 0 0% 100%;
+  --muted: 0 0% 98%;
+  --muted-foreground: 0 0% 50%;
+  --border: 0 0% 90%;
+  --input: 0 0% 98%;
+  --ring: 0 0% 20%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --warning: 40 80% 55%;
+  --warning-foreground: 0 0% 10%;
+  --success: 140 60% 45%;
+  --success-foreground: 0 0% 100%;
+  font-family: "Helvetica Neue", system-ui, sans-serif;
+}
+
+.theme-minimal .minimal-clean {
+  border: 1px solid hsl(0, 0%, 90%);
+  background: hsl(0, 0%, 100%);
+}

@@ -2,16 +2,9 @@ import React from 'react';
 import { Toaster } from '@/shared/components/atoms/ui/sonner';
 import { Provider } from '@/shared/providers';
 import NextTopLoader from 'nextjs-toploader';
-import { Livvic } from 'next/font/google';
+import { allFontVariables } from '@/shared/lib/themes/theme-fonts';
+import { FoodBackground } from '@/shared/components/atoms/ui/food-background';
 import '@/shared/styles/globals.css';
-
-const spaceGrotesk = Livvic({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-space-grotesk',
-  style: ['normal', 'italic'],
-  weight: ['400', '500', '600', '700'],
-});
 
 interface RootLayoutProps {
   readonly children: React.ReactNode;
@@ -21,10 +14,13 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${spaceGrotesk.variable} font-space-grotesk`}>
+      <body className={`${allFontVariables} font-sans bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100`}>
         <NextTopLoader showSpinner={true} />
+        <FoodBackground density="medium" opacity={0.06} />
         <Provider>
-          {children}
+          <div className="relative z-10">
+            {children}
+          </div>
         </Provider>
 
         <Toaster richColors />

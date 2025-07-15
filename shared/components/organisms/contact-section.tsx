@@ -41,7 +41,7 @@ interface ContactInfo {
 }
 
 interface ContactSectionProps {
-  variant?: "default" | "split" | "cards" | "minimal" | "centered" | "with-map";
+  variant?: "default" | "split" | "cards" | "minimal" | "centered" | "with-map" | "restaurant";
   title?: string;
   description?: string;
   contactInfo?: ContactInfo;
@@ -567,6 +567,100 @@ export function ContactSection({
                 </CardHeader>
                 <CardContent>
                   <ContactForm onSubmit={onSubmit} theme={theme} />
+                </CardContent>
+              </Card>
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  // Restaurant variant
+  if (variant === "restaurant") {
+    return (
+      <section className={cn("py-20 bg-gradient-to-b from-amber-50 to-orange-50", className)}>
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-amber-900">{title}</h2>
+            <p className="text-xl text-amber-700 max-w-3xl mx-auto leading-relaxed">
+              {description}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {/* Contact Cards */}
+            {contactInfo.email && (
+              <Card className="text-center p-6 transition-all duration-300 hover:shadow-lg border-2 border-amber-200 bg-white/80 backdrop-blur-sm">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 bg-gradient-to-r from-amber-600 to-orange-600">
+                  <Mail className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2 text-amber-900">Email</h3>
+                <p className="text-sm mb-4 text-amber-700">
+                  Envoyez-nous un email
+                </p>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  asChild 
+                  className="border-amber-300 text-amber-900 hover:bg-amber-50"
+                >
+                  <a href={`mailto:${contactInfo.email}`}>
+                    {contactInfo.email}
+                  </a>
+                </Button>
+              </Card>
+            )}
+
+            {contactInfo.phone && (
+              <Card className="text-center p-6 transition-all duration-300 hover:shadow-lg border-2 border-amber-200 bg-white/80 backdrop-blur-sm">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 bg-gradient-to-r from-amber-600 to-orange-600">
+                  <Phone className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2 text-amber-900">Téléphone</h3>
+                <p className="text-sm mb-4 text-amber-700">
+                  Appelez-nous directement
+                </p>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  asChild 
+                  className="border-amber-300 text-amber-900 hover:bg-amber-50"
+                >
+                  <a href={`tel:${contactInfo.phone}`}>
+                    {contactInfo.phone}
+                  </a>
+                </Button>
+              </Card>
+            )}
+
+            {contactInfo.address && (
+              <Card className="text-center p-6 transition-all duration-300 hover:shadow-lg border-2 border-amber-200 bg-white/80 backdrop-blur-sm">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4 bg-gradient-to-r from-amber-600 to-orange-600">
+                  <MapPin className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2 text-amber-900">Adresse</h3>
+                <p className="text-sm mb-4 text-amber-700">
+                  Venez nous rendre visite
+                </p>
+                <p className="text-sm text-amber-800">{contactInfo.address}</p>
+              </Card>
+            )}
+          </div>
+
+          {/* Contact Form */}
+          {showForm && (
+            <div className="max-w-2xl mx-auto">
+              <Card className="border-2 border-amber-200 bg-white/80 backdrop-blur-sm">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-amber-900">Envoyez-nous un message</CardTitle>
+                  <CardDescription className="text-amber-700">
+                    Remplissez le formulaire ci-dessous et nous vous répondrons rapidement.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ContactForm onSubmit={onSubmit} theme="light" />
                 </CardContent>
               </Card>
             </div>

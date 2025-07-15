@@ -23,7 +23,7 @@ interface Stat {
 }
 
 interface AboutSectionProps {
-  variant?: "default" | "split" | "centered" | "timeline" | "stats" | "team";
+  variant?: "default" | "split" | "centered" | "timeline" | "stats" | "team" | "restaurant";
   title: string;
   subtitle?: string;
   description: string;
@@ -368,6 +368,76 @@ export function AboutSection({
               {ctaText}
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  if (variant === "restaurant") {
+    return (
+      <section className={cn("py-20 bg-gradient-to-br from-amber-50 to-orange-50", className)}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Content */}
+            <div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-6 text-amber-900">{title}</h2>
+              {subtitle && <p className="text-xl text-amber-800 mb-6">{subtitle}</p>}
+              <p className="text-lg text-amber-700 mb-8 leading-relaxed">{description}</p>
+              
+              {stats.length > 0 && (
+                <div className="grid grid-cols-3 gap-6 mb-8">
+                  {stats.map((stat, index) => (
+                    <div key={index} className="text-center">
+                      <div className="text-3xl font-bold text-amber-900 mb-2">{stat.value}</div>
+                      <div className="text-amber-700 text-sm font-medium">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {showCta && (
+                <Button 
+                  size="lg" 
+                  onClick={ctaAction}
+                  className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  {ctaText}
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Button>
+              )}
+            </div>
+
+            {/* Image */}
+            <div>
+              {image ? (
+                <img 
+                  src={image} 
+                  alt={title}
+                  className="w-full h-96 object-cover rounded-2xl shadow-2xl border-4 border-amber-200"
+                />
+              ) : (
+                <div className="aspect-video bg-gradient-to-br from-amber-100 to-orange-100 rounded-2xl flex items-center justify-center border-4 border-amber-200">
+                  <Building className="w-16 h-16 text-amber-400" />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {features.length > 0 && (
+            <div className="grid md:grid-cols-3 gap-8 mt-16">
+              {features.map((feature, index) => (
+                <Card key={index} className="border-2 border-amber-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm">
+                  <CardContent className="p-8 text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full flex items-center justify-center text-white">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3 text-amber-900">{feature.title}</h3>
+                    <p className="text-amber-700">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           )}
         </div>
       </section>

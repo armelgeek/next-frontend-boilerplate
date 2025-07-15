@@ -51,7 +51,7 @@ interface TeamMember {
 }
 
 interface TeamSectionProps {
-  variant?: "grid" | "cards" | "minimal" | "detailed" | "carousel" | "masonry";
+  variant?: "grid" | "cards" | "minimal" | "detailed" | "carousel" | "masonry" | "restaurant";
   title?: string;
   description?: string;
   members?: TeamMember[];
@@ -474,6 +474,84 @@ export function TeamSection({
     { icon: Star, value: "50+", label: "Années d'expérience" },
     { icon: Award, value: "25+", label: "Certifications" }
   ];
+
+  // Restaurant variant
+  if (variant === "restaurant") {
+    return (
+      <section className={cn("py-20 bg-gradient-to-br from-amber-50 to-orange-50", className)}>
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Header */}
+          <div className="text-center mb-16">
+            {title && (
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 text-amber-900">{title}</h2>
+            )}
+            {description && (
+              <p className="text-lg text-amber-700 max-w-3xl mx-auto">{description}</p>
+            )}
+          </div>
+
+          {/* Team Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {displayedMembers.map((member) => (
+              <Card key={member.id} className="border-2 border-amber-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm overflow-hidden">
+                <CardContent className="p-8 text-center">
+                  <div className="relative mb-6">
+                    <Avatar className="w-24 h-24 mx-auto ring-4 ring-amber-200">
+                      <AvatarImage src={member.avatar} alt={member.name} />
+                      <AvatarFallback className="bg-gradient-to-r from-amber-600 to-orange-600 text-white text-xl">
+                        {member.name.split(' ').map(n => n[0]).join('')}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
+                  
+                  <h3 className="text-xl font-semibold mb-2 text-amber-900">{member.name}</h3>
+                  <p className="text-amber-700 font-medium mb-4">{member.role}</p>
+                  
+                  {member.description && (
+                    <p className="text-amber-600 text-sm mb-6 leading-relaxed">{member.description}</p>
+                  )}
+
+                  {showSocial && member.social && (
+                    <div className="flex justify-center space-x-3">
+                      {member.social.linkedin && (
+                        <Button variant="outline" size="sm" className="border-amber-300 text-amber-700 hover:bg-amber-100">
+                          <LinkedinIcon className="w-4 h-4" />
+                        </Button>
+                      )}
+                      {member.social.twitter && (
+                        <Button variant="outline" size="sm" className="border-amber-300 text-amber-700 hover:bg-amber-100">
+                          <TwitterIcon className="w-4 h-4" />
+                        </Button>
+                      )}
+                      {member.social.email && (
+                        <Button variant="outline" size="sm" className="border-amber-300 text-amber-700 hover:bg-amber-100">
+                          <MailIcon className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Call to Action */}
+          {showCTA && onJoinTeam && (
+            <div className="text-center mt-16">
+              <Button 
+                size="lg" 
+                onClick={onJoinTeam}
+                className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                Rejoindre l'équipe
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
 
   if (variant === "carousel") {
     return (

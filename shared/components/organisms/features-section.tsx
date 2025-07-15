@@ -24,7 +24,7 @@ interface Feature {
 }
 
 interface FeaturesSectionProps {
-  variant?: "grid" | "alternating" | "centered" | "cards" | "list" | "icons-only";
+  variant?: "grid" | "alternating" | "centered" | "cards" | "list" | "icons-only" | "restaurant";
   title: string;
   subtitle?: string;
   description?: string;
@@ -264,6 +264,53 @@ export function FeaturesSection({
           {showCta && (
             <div className="text-center mt-12">
               <Button size="lg" onClick={ctaAction}>
+                {ctaText}
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  // Restaurant variant
+  if (variant === "restaurant") {
+    return (
+      <section className={cn("py-20 bg-gradient-to-br from-amber-50 to-orange-50", className)}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-amber-900">{title}</h2>
+            {subtitle && <p className="text-xl text-amber-800 mb-6">{subtitle}</p>}
+            {description && <p className="text-lg text-amber-700 max-w-3xl mx-auto">{description}</p>}
+          </div>
+
+          <div className={cn(
+            "grid gap-8",
+            columns === 2 && "md:grid-cols-2",
+            columns === 3 && "md:grid-cols-2 lg:grid-cols-3",
+            columns === 4 && "md:grid-cols-2 lg:grid-cols-4"
+          )}>
+            {features.map((feature, index) => (
+              <Card key={index} className="border-2 border-amber-200 shadow-lg hover:shadow-xl transition-all duration-300 bg-white/80 backdrop-blur-sm">
+                <CardContent className="p-8 text-center">
+                  <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-r from-amber-600 to-orange-600 rounded-full flex items-center justify-center text-white shadow-lg">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold mb-4 text-amber-900">{feature.title}</h3>
+                  <p className="text-amber-700 leading-relaxed">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {showCta && (
+            <div className="text-center mt-16">
+              <Button 
+                size="lg" 
+                onClick={ctaAction}
+                className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
+              >
                 {ctaText}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>

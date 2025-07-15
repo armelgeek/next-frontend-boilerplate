@@ -76,7 +76,14 @@ interface User {
 }
 
 interface NavbarProps {
-  variant?: "default" | "minimal" | "corporate" | "ecommerce" | "dashboard" | "landing" | "blog" | "app";
+  variant?: 
+    // Variants classiques (8 existants)
+    | "default" | "minimal" | "corporate" | "ecommerce" | "dashboard" | "landing" | "blog" | "app"
+    // Nouveaux variants avancés (25 nouveaux)
+    | "glassmorphism" | "sidebar" | "mega-menu" | "floating" | "split" | "centered" | "gradient"
+    | "dark" | "neon" | "retro" | "brutalist" | "magazine" | "portfolio" | "agency" | "startup"
+    | "saas" | "mobile-first" | "sticky-tabs" | "breadcrumb" | "notification-bar" | "social"
+    | "restaurant" | "travel" | "medical" | "education" | "finance" | "gaming";
   logo?: {
     src?: string;
     text?: string;
@@ -394,13 +401,60 @@ export function Navbar({
         return "bg-white border-b";
       case 'app':
         return "bg-white border-b shadow-sm";
+      
+      // Nouveaux variants avancés
+      case 'glassmorphism':
+        return "bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl";
+      case 'floating':
+        return "bg-white rounded-full shadow-lg border mx-4 mt-4";
+      case 'gradient':
+        return "bg-gradient-to-r from-purple-600 via-blue-600 to-teal-600 text-white";
+      case 'dark':
+        return "bg-black text-white border-b border-gray-800";
+      case 'neon':
+        return "bg-black text-green-400 border-b-2 border-green-400 shadow-lg shadow-green-400/20";
+      case 'retro':
+        return "bg-orange-100 border-b-4 border-orange-800 text-orange-900";
+      case 'brutalist':
+        return "bg-yellow-300 border-b-8 border-black text-black font-black";
+      case 'magazine':
+        return "bg-white border-b-2 border-red-600";
+      case 'portfolio':
+        return "bg-gray-900 text-white border-b border-gray-700";
+      case 'agency':
+        return "bg-white shadow-xl border-0";
+      case 'startup':
+        return "bg-gradient-to-r from-indigo-500 to-purple-600 text-white";
+      case 'saas':
+        return "bg-white border-b shadow-sm";
+      case 'mobile-first':
+        return "bg-white border-b md:bg-gray-50";
+      case 'sticky-tabs':
+        return "bg-white border-b-0 shadow-md";
+      case 'notification-bar':
+        return "bg-blue-600 text-white";
+      case 'social':
+        return "bg-gradient-to-r from-pink-500 to-purple-600 text-white";
+      case 'restaurant':
+        return "bg-amber-50 border-b-2 border-amber-800 text-amber-900";
+      case 'travel':
+        return "bg-sky-100 border-b-2 border-sky-600 text-sky-900";
+      case 'medical':
+        return "bg-green-50 border-b-2 border-green-600 text-green-900";
+      case 'education':
+        return "bg-blue-50 border-b-2 border-blue-600 text-blue-900";
+      case 'finance':
+        return "bg-emerald-900 text-white border-b border-emerald-700";
+      case 'gaming':
+        return "bg-purple-900 text-purple-100 border-b-2 border-purple-400";
+      
       default:
         return "bg-white border-b";
     }
   };
 
   const navbarClass = cn(
-    "w-full transition-all duration-300",
+    "w-full transition-all py-2 duration-300",
     sticky && "sticky top-0 z-50",
     getVariantStyles(),
     isScrolled && sticky && "shadow-sm",
@@ -560,6 +614,744 @@ export function Navbar({
                 onLogout={onLogout}
                 onProfileClick={onProfileClick}
               />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Glassmorphism variant
+  if (variant === 'glassmorphism') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <Logo logo={logo} />
+            
+            <nav className="hidden md:flex items-center space-x-8">
+              {navigation.slice(0, 4).map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm font-medium text-white hover:text-white/80 transition-colors backdrop-blur-sm"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <Button variant="outline" className="bg-white/20 border-white/30 text-white hover:bg-white/30" onClick={onLogin}>
+                  Se connecter
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Floating variant
+  if (variant === 'floating') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-between h-16 px-8">
+            <Logo logo={logo} />
+            
+            <nav className="hidden md:flex items-center space-x-6">
+              {navigation.slice(0, 4).map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm font-medium hover:text-blue-600 transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <Button variant="default" onClick={onLogin}>
+                  Se connecter
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Gradient variant
+  if (variant === 'gradient') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <Logo logo={logo} />
+            
+            <nav className="hidden md:flex items-center space-x-8">
+              {navigation.slice(0, 5).map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm font-medium text-white hover:text-white/80 transition-colors"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              {showSearch && (
+                <Button variant="ghost" size="sm" onClick={onSearchClick} className="text-white hover:bg-white/20">
+                  <Search className="h-4 w-4" />
+                </Button>
+              )}
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <Button variant="outline" className="border-white text-white hover:bg-white hover:text-purple-600" onClick={onLogin}>
+                  Se connecter
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Dark variant
+  if (variant === 'dark') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <Logo logo={logo} />
+            
+            <nav className="hidden md:flex items-center space-x-8">
+              {navigation.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm font-medium text-white hover:text-gray-300 transition-colors flex items-center space-x-1"
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </a>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              {showSearch && (
+                <Button variant="ghost" size="sm" onClick={onSearchClick} className="text-white hover:bg-gray-800">
+                  <Search className="h-4 w-4" />
+                </Button>
+              )}
+              {showNotifications && (
+                <Button variant="ghost" size="sm" onClick={onNotificationClick} className="relative text-white hover:bg-gray-800">
+                  <Bell className="h-4 w-4" />
+                  {notificationCount > 0 && (
+                    <Badge className="absolute -top-2 -right-2 px-1.5 py-0.5 text-xs bg-red-500">
+                      {notificationCount}
+                    </Badge>
+                  )}
+                </Button>
+              )}
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <Button variant="outline" className="border-gray-600 text-white hover:bg-gray-800" onClick={onLogin}>
+                  Se connecter
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Neon variant
+  if (variant === 'neon') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-green-400 rounded-lg flex items-center justify-center animate-pulse">
+                <span className="text-black font-bold text-sm">N</span>
+              </div>
+              <span className="font-bold text-xl text-green-400">{logo?.text || "NEON"}</span>
+            </div>
+            
+            <nav className="hidden md:flex items-center space-x-8">
+              {navigation.slice(0, 4).map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm font-medium text-green-400 hover:text-green-300 transition-colors border border-green-400 px-3 py-1 rounded hover:shadow-lg hover:shadow-green-400/50"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <Button className="bg-green-400 text-black hover:bg-green-300 font-bold" onClick={onLogin}>
+                  CONNECT
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Retro variant
+  if (variant === 'retro') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-orange-800 rounded-full flex items-center justify-center">
+                <span className="text-orange-100 font-bold text-lg">R</span>
+              </div>
+              <span className="font-black text-2xl text-orange-900">{logo?.text || "RETRO"}</span>
+            </div>
+            
+            <nav className="hidden md:flex items-center space-x-6">
+              {navigation.slice(0, 4).map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-lg font-black text-orange-800 hover:text-orange-600 transition-colors border-b-4 border-transparent hover:border-orange-800 pb-1"
+                >
+                  {item.label.toUpperCase()}
+                </a>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <Button className="bg-orange-800 text-orange-100 hover:bg-orange-700 font-black text-lg px-6 py-3 rounded-none border-4 border-orange-900" onClick={onLogin}>
+                  LOGIN
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Brutalist variant
+  if (variant === 'brutalist') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+            <div className="flex items-center space-x-3">
+              <div className="w-16 h-16 bg-black border-4 border-black flex items-center justify-center">
+                <span className="text-yellow-300 font-black text-2xl">B</span>
+              </div>
+              <span className="font-black text-3xl text-black">{logo?.text || "BRUTAL"}</span>
+            </div>
+            
+            <nav className="hidden md:flex items-center space-x-2">
+              {navigation.slice(0, 4).map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-xl font-black text-black hover:text-white hover:bg-black transition-all border-4 border-black px-4 py-2 bg-yellow-300"
+                >
+                  {item.label.toUpperCase()}
+                </a>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <Button className="bg-black text-yellow-300 hover:bg-yellow-300 hover:text-black font-black text-xl px-8 py-4 rounded-none border-4 border-black" onClick={onLogin}>
+                  LOGIN!
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Magazine variant
+  if (variant === 'magazine') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-4">
+              <div className="text-2xl font-black text-red-600">{logo?.text || "MAGAZINE"}</div>
+              <div className="text-xs text-gray-500 hidden md:block">
+                {new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+              </div>
+            </div>
+            
+            <nav className="hidden lg:flex items-center space-x-8">
+              {navigation.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm font-medium text-gray-900 hover:text-red-600 transition-colors uppercase tracking-wide"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm" onClick={onSearchClick}>
+                <Search className="h-4 w-4" />
+              </Button>
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <Button variant="outline" className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white" onClick={onLogin}>
+                  S'abonner
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Agency variant
+  if (variant === 'agency') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-20">
+            <Logo logo={logo} />
+            
+            <nav className="hidden lg:flex items-center space-x-12">
+              {navigation.slice(0, 5).map((item, index) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="relative text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors group"
+                >
+                  <span className="relative z-10">{item.label}</span>
+                  <span className="absolute inset-x-0 bottom-0 h-0.5 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>
+                </a>
+              ))}
+            </nav>
+
+            <div className="flex items-center space-x-6">
+              <div className="hidden md:flex items-center space-x-2 text-sm text-gray-600">
+                <Phone className="w-4 h-4" />
+                <span>+33 1 23 45 67 89</span>
+              </div>
+              {showCTA && (
+                <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-full" onClick={onCtaClick}>
+                  {ctaText}
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // SaaS variant
+  if (variant === 'saas') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-8">
+              <Logo logo={logo} />
+              
+              <nav className="hidden lg:flex items-center space-x-8">
+                {navigation.slice(0, 4).map((item) => (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <a href="/pricing" className="text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors">
+                  Tarifs
+                </a>
+              </nav>
+            </div>
+
+            <div className="flex items-center space-x-4">
+              {showSearch && (
+                <Button variant="ghost" size="sm" onClick={onSearchClick}>
+                  <Search className="h-4 w-4" />
+                </Button>
+              )}
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <div className="flex items-center space-x-3">
+                  <Button variant="ghost" onClick={onLogin}>
+                    Se connecter
+                  </Button>
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white" onClick={onCtaClick}>
+                    Essai gratuit
+                  </Button>
+                </div>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Restaurant variant
+  if (variant === 'restaurant') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-18">
+            <div className="flex items-center space-x-3">
+              <div className="w-12 h-12 bg-amber-800 rounded-full flex items-center justify-center">
+                <Utensils className="w-6 h-6 text-amber-100" />
+              </div>
+              <div>
+                <div className="font-bold text-xl text-amber-900">{logo?.text || "Restaurant"}</div>
+                <div className="text-xs text-amber-700">Cuisine authentique</div>
+              </div>
+            </div>
+            
+            <nav className="hidden lg:flex items-center space-x-8">
+              <a href="/menu" className="text-sm font-medium text-amber-800 hover:text-amber-600 transition-colors flex items-center space-x-1">
+                <Utensils className="w-4 h-4" />
+                <span>Menu</span>
+              </a>
+              <a href="/reservations" className="text-sm font-medium text-amber-800 hover:text-amber-600 transition-colors flex items-center space-x-1">
+                <Calendar className="w-4 h-4" />
+                <span>Réservations</span>
+              </a>
+              <a href="/about" className="text-sm font-medium text-amber-800 hover:text-amber-600 transition-colors">
+                À propos
+              </a>
+              <a href="/contact" className="text-sm font-medium text-amber-800 hover:text-amber-600 transition-colors flex items-center space-x-1">
+                <MapPin className="w-4 h-4" />
+                <span>Contact</span>
+              </a>
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center space-x-2 text-sm text-amber-800">
+                <Phone className="w-4 h-4" />
+                <span>01 23 45 67 89</span>
+              </div>
+              <Button className="bg-amber-800 hover:bg-amber-700 text-amber-100">
+                Réserver
+              </Button>
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Travel variant
+  if (variant === 'travel') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-sky-600 rounded-lg flex items-center justify-center">
+                <Plane className="w-5 h-5 text-white" />
+              </div>
+              <span className="font-bold text-xl text-sky-900">{logo?.text || "TravelCorp"}</span>
+            </div>
+            
+            <nav className="hidden lg:flex items-center space-x-8">
+              <a href="/destinations" className="text-sm font-medium text-sky-800 hover:text-sky-600 transition-colors flex items-center space-x-1">
+                <Globe className="w-4 h-4" />
+                <span>Destinations</span>
+              </a>
+              <a href="/hotels" className="text-sm font-medium text-sky-800 hover:text-sky-600 transition-colors flex items-center space-x-1">
+                <Building className="w-4 h-4" />
+                <span>Hôtels</span>
+              </a>
+              <a href="/flights" className="text-sm font-medium text-sky-800 hover:text-sky-600 transition-colors flex items-center space-x-1">
+                <Plane className="w-4 h-4" />
+                <span>Vols</span>
+              </a>
+              <a href="/packages" className="text-sm font-medium text-sky-800 hover:text-sky-600 transition-colors">
+                Packages
+              </a>
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm" onClick={onSearchClick}>
+                <Search className="h-4 w-4" />
+              </Button>
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <Button className="bg-sky-600 hover:bg-sky-700 text-white" onClick={onLogin}>
+                  Mon compte
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Medical variant
+  if (variant === 'medical') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center">
+                <Stethoscope className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <div className="font-bold text-lg text-green-900">{logo?.text || "MediCare"}</div>
+                <div className="text-xs text-green-700">Votre santé, notre priorité</div>
+              </div>
+            </div>
+            
+            <nav className="hidden lg:flex items-center space-x-8">
+              <a href="/services" className="text-sm font-medium text-green-800 hover:text-green-600 transition-colors">
+                Services
+              </a>
+              <a href="/doctors" className="text-sm font-medium text-green-800 hover:text-green-600 transition-colors flex items-center space-x-1">
+                <Users className="w-4 h-4" />
+                <span>Médecins</span>
+              </a>
+              <a href="/appointments" className="text-sm font-medium text-green-800 hover:text-green-600 transition-colors flex items-center space-x-1">
+                <Calendar className="w-4 h-4" />
+                <span>RDV</span>
+              </a>
+              <a href="/emergency" className="text-sm font-semibold text-red-600 hover:text-red-700 transition-colors">
+                Urgences
+              </a>
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center space-x-2 text-sm text-green-800">
+                <Phone className="w-4 h-4" />
+                <span>15 (Urgences)</span>
+              </div>
+              <Button className="bg-green-600 hover:bg-green-700 text-white">
+                Prendre RDV
+              </Button>
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Education variant
+  if (variant === 'education') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                <GraduationCap className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <div className="font-bold text-lg text-blue-900">{logo?.text || "EduPlatform"}</div>
+                <div className="text-xs text-blue-700">Apprendre sans limites</div>
+              </div>
+            </div>
+            
+            <nav className="hidden lg:flex items-center space-x-8">
+              <a href="/courses" className="text-sm font-medium text-blue-800 hover:text-blue-600 transition-colors flex items-center space-x-1">
+                <GraduationCap className="w-4 h-4" />
+                <span>Cours</span>
+              </a>
+              <a href="/teachers" className="text-sm font-medium text-blue-800 hover:text-blue-600 transition-colors flex items-center space-x-1">
+                <Users className="w-4 h-4" />
+                <span>Professeurs</span>
+              </a>
+              <a href="/library" className="text-sm font-medium text-blue-800 hover:text-blue-600 transition-colors flex items-center space-x-1">
+                <FileText className="w-4 h-4" />
+                <span>Bibliothèque</span>
+              </a>
+              <a href="/support" className="text-sm font-medium text-blue-800 hover:text-blue-600 transition-colors flex items-center space-x-1">
+                <HelpCircle className="w-4 h-4" />
+                <span>Support</span>
+              </a>
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              <Button variant="ghost" size="sm" onClick={onSearchClick}>
+                <Search className="h-4 w-4" />
+              </Button>
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <Button variant="ghost" onClick={onLogin}>
+                    Se connecter
+                  </Button>
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+                    S'inscrire
+                  </Button>
+                </div>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Finance variant
+  if (variant === 'finance') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-emerald-400 rounded-sm flex items-center justify-center">
+                <DollarSign className="w-5 h-5 text-emerald-900" />
+              </div>
+              <span className="font-bold text-xl text-white">{logo?.text || "FinanceCorpᵗᵐ"}</span>
+            </div>
+            
+            <nav className="hidden lg:flex items-center space-x-8">
+              <a href="/investment" className="text-sm font-medium text-emerald-100 hover:text-white transition-colors">
+                Investissement
+              </a>
+              <a href="/banking" className="text-sm font-medium text-emerald-100 hover:text-white transition-colors">
+                Banque
+              </a>
+              <a href="/insurance" className="text-sm font-medium text-emerald-100 hover:text-white transition-colors">
+                Assurance
+              </a>
+              <a href="/consulting" className="text-sm font-medium text-emerald-100 hover:text-white transition-colors">
+                Conseil
+              </a>
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center space-x-4 text-sm text-emerald-100">
+                <div className="flex items-center space-x-1">
+                  <span>CAC 40:</span>
+                  <span className="text-green-400 font-semibold">+2.3%</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <span>USD/EUR:</span>
+                  <span className="text-emerald-200 font-semibold">0.85</span>
+                </div>
+              </div>
+              {user ? (
+                <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+              ) : (
+                <Button variant="outline" className="border-emerald-400 text-emerald-100 hover:bg-emerald-400 hover:text-emerald-900" onClick={onLogin}>
+                  Espace client
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
+            </div>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  // Gaming variant
+  if (variant === 'gaming') {
+    return (
+      <header className={navbarClass}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-purple-400 rounded-lg flex items-center justify-center animate-pulse">
+                <Zap className="w-5 h-5 text-purple-900" />
+              </div>
+              <span className="font-black text-xl text-purple-100 tracking-wider">{logo?.text || "GAMEVERSE"}</span>
+            </div>
+            
+            <nav className="hidden lg:flex items-center space-x-6">
+              <a href="/games" className="text-sm font-medium text-purple-200 hover:text-purple-100 transition-colors border border-purple-400 px-3 py-1 rounded-full hover:bg-purple-400/20">
+                GAMES
+              </a>
+              <a href="/esports" className="text-sm font-medium text-purple-200 hover:text-purple-100 transition-colors border border-purple-400 px-3 py-1 rounded-full hover:bg-purple-400/20">
+                ESPORTS
+              </a>
+              <a href="/community" className="text-sm font-medium text-purple-200 hover:text-purple-100 transition-colors border border-purple-400 px-3 py-1 rounded-full hover:bg-purple-400/20">
+                COMMUNITY
+              </a>
+              <a href="/store" className="text-sm font-medium text-purple-200 hover:text-purple-100 transition-colors border border-purple-400 px-3 py-1 rounded-full hover:bg-purple-400/20">
+                STORE
+              </a>
+            </nav>
+
+            <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center space-x-2 text-sm text-purple-200">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span>1,247 online</span>
+              </div>
+              {user ? (
+                <div className="flex items-center space-x-2">
+                  <div className="text-xs text-purple-200">
+                    <div>Level 42</div>
+                    <div className="text-yellow-400">★★★★☆</div>
+                  </div>
+                  <UserMenu user={user} onLogout={onLogout} onProfileClick={onProfileClick} />
+                </div>
+              ) : (
+                <Button className="bg-purple-400 hover:bg-purple-300 text-purple-900 font-bold" onClick={onLogin}>
+                  JOIN GAME
+                </Button>
+              )}
+              <MobileMenu navigation={navigation} user={user} onLogin={onLogin} onLogout={onLogout} onProfileClick={onProfileClick} />
             </div>
           </div>
         </div>

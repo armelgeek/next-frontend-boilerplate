@@ -41,7 +41,7 @@ interface PricingPlan {
 }
 
 interface PricingSectionProps {
-  variant?: "default" | "cards" | "table" | "toggle" | "minimal";
+  variant?: "default" | "cards" | "table" | "toggle" | "minimal" | "restaurant";
   title: string;
   subtitle?: string;
   plans: PricingPlan[];
@@ -336,6 +336,95 @@ export function PricingSection({
                 variant="minimal"
                 currencySymbol={currencySymbol}
               />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (variant === "restaurant") {
+    return (
+      <section className={cn("py-20 bg-gradient-to-b from-amber-50 to-orange-50", className)}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-amber-900">{title}</h2>
+            {subtitle && (
+              <p className="text-xl text-amber-700 max-w-3xl mx-auto">{subtitle}</p>
+            )}
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {plans.map(plan => (
+              <Card key={plan.id} className={cn(
+                "relative transition-all duration-300 hover:shadow-lg border-2 border-amber-200 bg-white/80 backdrop-blur-sm",
+                plan.popular && "border-amber-500 shadow-lg ring-2 ring-amber-500/20 bg-gradient-to-br from-amber-50 to-orange-50",
+                plan.recommended && "border-orange-500 shadow-lg ring-2 ring-orange-500/20"
+              )}>
+                {plan.badge && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                    <Badge className="bg-gradient-to-r from-amber-600 to-orange-600 text-white">
+                      {plan.badge}
+                    </Badge>
+                  </div>
+                )}
+                
+                <CardContent className="p-8">
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-bold mb-2 text-amber-900">{plan.name}</h3>
+                    <p className="text-amber-700 mb-4">{plan.description}</p>
+                    
+                    <div className="flex items-baseline justify-center gap-1">
+                      {plan.originalPrice && plan.originalPrice > plan.price && (
+                        <span className="text-lg text-amber-500 line-through">
+                          {currencySymbol}{plan.originalPrice}
+                        </span>
+                      )}
+                      <span className="text-4xl font-bold text-amber-900">
+                        {currencySymbol}{plan.price}
+                      </span>
+                      <span className="text-amber-700">/{plan.period}</span>
+                    </div>
+                  </div>
+
+                  <Button 
+                    className={cn(
+                      "w-full mb-6 transition-all duration-300",
+                      plan.popular 
+                        ? "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-lg"
+                        : "border-2 border-amber-300 text-amber-900 hover:bg-amber-50"
+                    )}
+                    variant={plan.popular ? "default" : "outline"}
+                    size="lg"
+                    onClick={plan.onSelect}
+                  >
+                    {plan.buttonText || "Réserver"}
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+
+                  <div className="space-y-3">
+                    {plan.features.map((feature, index) => (
+                      <div key={index} className={cn(
+                        "flex items-start gap-3",
+                        feature.highlight && "bg-amber-100/50 -mx-2 px-2 py-1 rounded"
+                      )}>
+                        {feature.included ? (
+                          <Check className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
+                        ) : (
+                          <X className="w-5 h-5 text-gray-400 mt-0.5 flex-shrink-0" />
+                        )}
+                        <span className={cn(
+                          "text-sm",
+                          feature.included ? "text-amber-900" : "text-gray-400",
+                          feature.highlight && "font-medium"
+                        )}>
+                          {feature.name}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>

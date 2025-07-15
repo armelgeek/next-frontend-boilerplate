@@ -2,6 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
+/* Import theme styles */
+@import './themes.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -128,6 +131,105 @@ body, html {
   }
 }
 
+/* Food Background Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-10px) rotate(5deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(0deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-5deg);
+  }
+}
+
+@keyframes fadeInOut {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes pulse-food {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateX(0px) translateY(0px);
+  }
+  25% {
+    transform: translateX(10px) translateY(-10px);
+  }
+  50% {
+    transform: translateX(-5px) translateY(-20px);
+  }
+  75% {
+    transform: translateX(-15px) translateY(-10px);
+  }
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+}
+
+@keyframes spin-slow {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+
+.animate-float {
+  animation: float 15s ease-in-out infinite;
+}
+
+.animate-fade-in-out {
+  animation: fadeInOut 10s ease-in-out infinite;
+}
+
+.animate-pulse-food {
+  animation: pulse-food 8s ease-in-out infinite;
+}
+
+.animate-drift {
+  animation: drift 12s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 6s ease-in-out infinite;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -247,4 +349,74 @@ body, html {
 }
 .react-time-picker__inputGroup__hour{
   border-color: #CC0000!important;
+}
+
+/* Restaurant Fonts CSS Classes */
+.restaurant-font-body {
+  font-family: var(--font-merriweather), serif;
+}
+
+.restaurant-font-heading {
+  font-family: var(--font-playfair-display), serif;
+}
+
+.restaurant-font-decorative {
+  font-family: var(--font-great-vibes), cursive;
+}
+
+.restaurant-font-accent {
+  font-family: var(--font-pacifico), cursive;
+}
+
+.restaurant-font-handwriting {
+  font-family: var(--font-satisfy), cursive;
+}
+
+.restaurant-font-casual {
+  font-family: var(--font-caveat), cursive;
+}
+
+.restaurant-font-menu {
+  font-family: var(--font-dancing-script), cursive;
+}
+
+/* Restaurant theme global styles */
+.restaurant-theme {
+  --primary-font: var(--font-merriweather);
+  --heading-font: var(--font-playfair-display);
+  --decorative-font: var(--font-great-vibes);
+  --accent-font: var(--font-pacifico);
+  --handwriting-font: var(--font-satisfy);
+  --menu-font: var(--font-dancing-script);
+}
+
+.restaurant-theme h1,
+.restaurant-theme .hero-title {
+  font-family: var(--decorative-font), cursive;
+}
+
+.restaurant-theme h2,
+.restaurant-theme h3,
+.restaurant-theme .section-title {
+  font-family: var(--heading-font), serif;
+}
+
+.restaurant-theme p,
+.restaurant-theme .body-text {
+  font-family: var(--primary-font), serif;
+}
+
+.restaurant-theme .menu-item,
+.restaurant-theme .price {
+  font-family: var(--menu-font), cursive;
+}
+
+.restaurant-theme .accent,
+.restaurant-theme .button {
+  font-family: var(--accent-font), cursive;
+}
+
+.restaurant-theme .quote,
+.restaurant-theme .testimonial {
+  font-family: var(--handwriting-font), cursive;
 }

@@ -25,7 +25,7 @@ interface CTAAction {
 }
 
 interface CTASectionProps {
-  variant?: "default" | "gradient" | "centered" | "split" | "newsletter" | "contact" | "minimal";
+  variant?: "default" | "gradient" | "centered" | "split" | "newsletter" | "contact" | "minimal" | "restaurant";
   title: string;
   subtitle?: string;
   description: string;
@@ -378,6 +378,66 @@ export function CTASection({
 
           {showSocialProof && (
             <div className="flex items-center justify-center gap-2 text-gray-500">
+              <Users className="w-4 h-4" />
+              <span className="text-sm">{socialProofText}</span>
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  // Restaurant variant
+  if (variant === "restaurant") {
+    return (
+      <section className={cn("py-20 bg-gradient-to-b from-amber-50 to-orange-50", className)}>
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          {badge && (
+            <Badge className="mb-6 bg-gradient-to-r from-amber-600 to-orange-600 text-white">
+              <Sparkles className="w-4 h-4 mr-2" />
+              {badge}
+            </Badge>
+          )}
+          <h2 className="text-3xl md:text-5xl font-bold mb-6 text-amber-900">{title}</h2>
+          {subtitle && (
+            <p className="text-xl mb-4 text-amber-800">{subtitle}</p>
+          )}
+          <p className="text-lg text-amber-700 mb-10 max-w-2xl mx-auto">{description}</p>
+          
+          {actions.length > 0 && (
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              {actions.map((action, index) => (
+                <Button
+                  key={index}
+                  variant={index === 0 ? "default" : "outline"}
+                  size="lg"
+                  className={cn(
+                    "flex items-center gap-2 transition-all duration-300",
+                    index === 0 
+                      ? "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-lg"
+                      : "border-2 border-amber-300 text-amber-900 hover:bg-amber-50"
+                  )}
+                  onClick={action.onClick}
+                >
+                  {action.label}
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              ))}
+            </div>
+          )}
+
+          {image && (
+            <div className="relative max-w-3xl mx-auto mb-8">
+              <img
+                src={image}
+                alt={title}
+                className="w-full rounded-xl shadow-2xl border-4 border-amber-200"
+              />
+            </div>
+          )}
+
+          {showSocialProof && (
+            <div className="flex items-center justify-center gap-2 text-amber-700">
               <Users className="w-4 h-4" />
               <span className="text-sm">{socialProofText}</span>
             </div>

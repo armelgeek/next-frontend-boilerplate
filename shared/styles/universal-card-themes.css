@@ -1,0 +1,351 @@
+/* Styles CSS pour les thèmes Universal Card */
+
+/* Variables globales pour les Universal Cards thématiques */
+:root {
+  --universal-card-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --universal-card-hover-scale: 1.02;
+  --universal-card-shadow-transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Classe de base pour toutes les Universal Cards thématiques */
+.universal-card-themed {
+  transition: var(--universal-card-transition);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.universal-card-themed:hover {
+  transform: scale(var(--universal-card-hover-scale));
+  transition: var(--universal-card-transition);
+}
+
+/* Styles spécifiques par thème */
+
+/* Thème Default */
+.universal-card-theme-default {
+  --card-bg: hsl(0 0% 100%);
+  --card-border: hsl(214 14% 90%);
+  --card-hover: hsl(214 14% 95%);
+  --card-shadow: hsl(214 14% 0% / 0.05);
+  --card-shadow-hover: hsl(214 14% 0% / 0.15);
+  --title-color: hsl(214 19% 15%);
+  --description-color: hsl(214 14% 45%);
+  --meta-color: hsl(214 14% 55%);
+  --price-color: hsl(142 72% 29%);
+  --icon-color: hsl(214 14% 45%);
+  --rating-color: hsl(38 92% 50%);
+  --featured-border: hsl(214 84% 56%);
+  --featured-glow: hsl(214 84% 56% / 0.2);
+  --urgent-border: hsl(0 84% 60%);
+  --urgent-glow: hsl(0 84% 60% / 0.2);
+}
+
+.universal-card-theme-default:hover {
+  background-color: var(--card-hover);
+  box-shadow: 0 4px 12px var(--card-shadow-hover);
+}
+
+/* Thème Glassmorphism */
+.universal-card-theme-glassmorphism {
+  --card-bg: hsl(0 0% 100% / 0.1);
+  --card-border: hsl(0 0% 100% / 0.2);
+  --card-hover: hsl(0 0% 100% / 0.15);
+  --card-shadow: hsl(0 0% 0% / 0.1);
+  --card-shadow-hover: hsl(0 0% 0% / 0.2);
+  --title-color: hsl(0 0% 5%);
+  --description-color: hsl(0 0% 25%);
+  --meta-color: hsl(0 0% 40%);
+  --price-color: hsl(142 72% 29%);
+  --icon-color: hsl(0 0% 30%);
+  --rating-color: hsl(38 92% 50%);
+  --featured-border: hsl(214 84% 56% / 0.4);
+  --featured-glow: hsl(214 84% 56% / 0.3);
+  --urgent-border: hsl(0 84% 60% / 0.4);
+  --urgent-glow: hsl(0 84% 60% / 0.3);
+  
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+}
+
+.universal-card-theme-glassmorphism:hover {
+  background-color: var(--card-hover);
+  box-shadow: 0 8px 32px var(--card-shadow-hover);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+}
+
+/* Thème Dark */
+.universal-card-theme-dark {
+  --card-bg: hsl(220 13% 13%);
+  --card-border: hsl(220 13% 20%);
+  --card-hover: hsl(220 13% 18%);
+  --card-shadow: hsl(0 0% 0% / 0.3);
+  --card-shadow-hover: hsl(0 0% 0% / 0.5);
+  --title-color: hsl(0 0% 95%);
+  --description-color: hsl(0 0% 70%);
+  --meta-color: hsl(0 0% 60%);
+  --price-color: hsl(142 72% 60%);
+  --icon-color: hsl(0 0% 70%);
+  --rating-color: hsl(38 92% 60%);
+  --featured-border: hsl(214 84% 66%);
+  --featured-glow: hsl(214 84% 66% / 0.3);
+  --urgent-border: hsl(0 84% 70%);
+  --urgent-glow: hsl(0 84% 70% / 0.3);
+}
+
+.universal-card-theme-dark:hover {
+  background-color: var(--card-hover);
+  box-shadow: 0 4px 20px var(--card-shadow-hover);
+}
+
+/* Thème Neon */
+.universal-card-theme-neon {
+  --card-bg: hsl(240 6% 10%);
+  --card-border: hsl(315 100% 50%);
+  --card-hover: hsl(240 6% 15%);
+  --card-shadow: hsl(315 100% 50% / 0.2);
+  --card-shadow-hover: hsl(315 100% 50% / 0.4);
+  --title-color: hsl(315 100% 90%);
+  --description-color: hsl(315 100% 70%);
+  --meta-color: hsl(315 100% 60%);
+  --price-color: hsl(80 100% 50%);
+  --icon-color: hsl(315 100% 70%);
+  --rating-color: hsl(40 100% 50%);
+  --featured-border: hsl(315 100% 50%);
+  --featured-glow: hsl(315 100% 50% / 0.5);
+  --urgent-border: hsl(0 100% 50%);
+  --urgent-glow: hsl(0 100% 50% / 0.5);
+  --universal-card-hover-scale: 1.05;
+  
+  border: 1px solid var(--card-border);
+  box-shadow: 0 0 20px var(--card-shadow);
+}
+
+.universal-card-theme-neon:hover {
+  background-color: var(--card-hover);
+  box-shadow: 0 0 30px var(--card-shadow-hover), 
+              0 0 60px hsl(315 100% 50% / 0.2);
+  border-color: hsl(315 100% 60%);
+}
+
+/* Thème Retro */
+.universal-card-theme-retro {
+  --card-bg: hsl(45 29% 97%);
+  --card-border: hsl(25 75% 70%);
+  --card-hover: hsl(45 29% 94%);
+  --card-shadow: hsl(25 75% 70% / 0.2);
+  --card-shadow-hover: hsl(25 75% 70% / 0.4);
+  --title-color: hsl(25 75% 25%);
+  --description-color: hsl(25 75% 45%);
+  --meta-color: hsl(25 75% 55%);
+  --price-color: hsl(5 75% 55%);
+  --icon-color: hsl(25 75% 45%);
+  --rating-color: hsl(40 90% 60%);
+  --featured-border: hsl(25 75% 55%);
+  --featured-glow: hsl(25 75% 55% / 0.3);
+  --urgent-border: hsl(5 75% 55%);
+  --urgent-glow: hsl(5 75% 55% / 0.3);
+  --universal-card-hover-scale: 1.08;
+  
+  border: 2px solid var(--card-border);
+  border-radius: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.universal-card-theme-retro:hover {
+  background-color: var(--card-hover);
+  box-shadow: 0 8px 25px var(--card-shadow-hover);
+  transform: scale(1.08) rotate(1deg);
+}
+
+/* Styles pour les cartes featured */
+.universal-card-themed[data-featured="true"] {
+  border-color: var(--featured-border) !important;
+  box-shadow: 0 0 0 1px var(--featured-border), 
+              0 0 20px var(--featured-glow) !important;
+}
+
+/* Styles pour les cartes urgent */
+.universal-card-themed[data-urgent="true"] {
+  border-color: var(--urgent-border) !important;
+  box-shadow: 0 0 0 1px var(--urgent-border), 
+              0 0 20px var(--urgent-glow) !important;
+  animation: pulse-urgent 2s infinite;
+}
+
+@keyframes pulse-urgent {
+  0%, 100% { 
+    box-shadow: 0 0 0 1px var(--urgent-border), 
+                0 0 20px var(--urgent-glow);
+  }
+  50% { 
+    box-shadow: 0 0 0 1px var(--urgent-border), 
+                0 0 30px var(--urgent-glow);
+  }
+}
+
+/* Styles pour les éléments internes des cartes thématiques */
+.universal-card-themed .card-title {
+  color: var(--title-color);
+}
+
+.universal-card-themed .card-description {
+  color: var(--description-color);
+}
+
+.universal-card-themed .card-meta {
+  color: var(--meta-color);
+}
+
+.universal-card-themed .card-price {
+  color: var(--price-color);
+  font-weight: 600;
+}
+
+.universal-card-themed .card-icon {
+  color: var(--icon-color);
+}
+
+.universal-card-themed .card-rating {
+  color: var(--rating-color);
+}
+
+/* Styles pour les badges thématiques */
+.universal-card-themed .badge-primary {
+  background-color: hsl(214 84% 56%);
+  color: white;
+}
+
+.universal-card-themed .badge-success {
+  background-color: hsl(142 72% 29%);
+  color: white;
+}
+
+.universal-card-themed .badge-warning {
+  background-color: hsl(38 92% 50%);
+  color: white;
+}
+
+.universal-card-themed .badge-error {
+  background-color: hsl(0 84% 60%);
+  color: white;
+}
+
+/* Styles pour les boutons thématiques */
+.universal-card-themed .btn-primary {
+  background-color: hsl(214 84% 56%);
+  color: white;
+  border: none;
+  transition: var(--universal-card-transition);
+}
+
+.universal-card-themed .btn-primary:hover {
+  background-color: hsl(214 84% 46%);
+}
+
+.universal-card-themed .btn-secondary {
+  background-color: var(--card-hover);
+  color: var(--title-color);
+  border: 1px solid var(--card-border);
+  transition: var(--universal-card-transition);
+}
+
+.universal-card-themed .btn-secondary:hover {
+  background-color: var(--card-border);
+}
+
+/* Styles responsives */
+@media (max-width: 768px) {
+  .universal-card-themed {
+    --universal-card-hover-scale: 1.01;
+  }
+  
+  .universal-card-theme-retro:hover {
+    transform: scale(1.03) rotate(0.5deg);
+  }
+}
+
+/* Styles pour les images thématiques */
+.universal-card-themed .card-image {
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.universal-card-theme-neon .card-image {
+  border-radius: 0.25rem;
+  border: 1px solid hsl(315 100% 50% / 0.3);
+}
+
+.universal-card-theme-retro .card-image {
+  border-radius: 1rem;
+  border: 2px solid hsl(25 75% 70%);
+}
+
+.universal-card-theme-glassmorphism .card-image {
+  border-radius: 0.75rem;
+  backdrop-filter: blur(10px);
+}
+
+/* Animation pour les cartes au chargement */
+.universal-card-themed {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Délai d'animation pour un effet échelonné */
+.universal-card-themed:nth-child(1) { animation-delay: 0.1s; }
+.universal-card-themed:nth-child(2) { animation-delay: 0.2s; }
+.universal-card-themed:nth-child(3) { animation-delay: 0.3s; }
+.universal-card-themed:nth-child(4) { animation-delay: 0.4s; }
+.universal-card-themed:nth-child(5) { animation-delay: 0.5s; }
+
+/* Styles pour les overlays et gradients */
+.universal-card-themed .image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3));
+  pointer-events: none;
+}
+
+.universal-card-theme-neon .image-overlay {
+  background: linear-gradient(to bottom, 
+    hsl(315 100% 50% / 0), 
+    hsl(315 100% 50% / 0.3));
+}
+
+.universal-card-theme-retro .image-overlay {
+  background: linear-gradient(to bottom, 
+    hsl(25 75% 70% / 0), 
+    hsl(25 75% 70% / 0.4));
+}
+
+/* Focus states pour l'accessibilité */
+.universal-card-themed:focus-visible {
+  outline: 2px solid var(--featured-border);
+  outline-offset: 2px;
+}
+
+/* Styles pour les états de chargement */
+.universal-card-themed.loading {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}

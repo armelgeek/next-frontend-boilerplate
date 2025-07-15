@@ -31,7 +31,7 @@ interface Testimonial {
 }
 
 interface TestimonialsSectionProps {
-  variant?: "grid" | "carousel" | "masonry" | "video" | "minimal" | "featured";
+  variant?: "grid" | "carousel" | "masonry" | "video" | "minimal" | "featured" | "restaurant";
   title: string;
   subtitle?: string;
   testimonials: Testimonial[];
@@ -423,6 +423,77 @@ export function TestimonialsSection({
                 showDate={showDate}
                 showCompany={showCompany}
               />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (variant === "restaurant") {
+    return (
+      <section className={cn("py-20 bg-gradient-to-b from-amber-50 to-orange-50", className)}>
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-amber-900">{title}</h2>
+            {subtitle && (
+              <p className="text-xl text-amber-700 max-w-3xl mx-auto">{subtitle}</p>
+            )}
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((testimonial) => (
+              <Card key={testimonial.id} className="h-full group hover:shadow-lg transition-all duration-300 border-2 border-amber-200 bg-white/80 backdrop-blur-sm">
+                <CardContent className="p-6 flex flex-col h-full">
+                  <div className="flex items-start justify-between mb-4">
+                    {showRating && (
+                      <div className="flex items-center space-x-1">
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <Star
+                            key={i}
+                            className={cn(
+                              "w-4 h-4",
+                              i < testimonial.rating ? "text-amber-400 fill-amber-400" : "text-gray-300"
+                            )}
+                          />
+                        ))}
+                      </div>
+                    )}
+                    {testimonial.verified && (
+                      <Badge className="bg-gradient-to-r from-amber-600 to-orange-600 text-white">Vérifié</Badge>
+                    )}
+                  </div>
+                  
+                  <Quote className="w-6 h-6 text-amber-600 mb-3" />
+                  <p className="text-gray-700 leading-relaxed mb-6 flex-1">
+                    "{testimonial.content}"
+                  </p>
+                  
+                  <div className="flex items-center gap-3 mt-auto">
+                    <Avatar className="border-2 border-amber-200">
+                      {testimonial.avatar ? (
+                        <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
+                      ) : (
+                        <AvatarFallback className="bg-gradient-to-r from-amber-100 to-orange-100 text-amber-900">
+                          {testimonial.name[0]}
+                        </AvatarFallback>
+                      )}
+                    </Avatar>
+                    <div className="flex-1">
+                      <div className="font-semibold text-amber-900">{testimonial.name}</div>
+                      {testimonial.role && showCompany && (
+                        <div className="text-sm text-amber-700">
+                          {testimonial.role}
+                          {testimonial.company && ` chez ${testimonial.company}`}
+                        </div>
+                      )}
+                      {showDate && testimonial.date && (
+                        <div className="text-xs text-amber-600">{testimonial.date}</div>
+                      )}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>

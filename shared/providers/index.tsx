@@ -6,6 +6,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'next-themes';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { AuthProvider } from './auth-provider';
+import { ThemeProvider as NavbarThemeProvider } from './theme-provider';
 
 interface ProviderProps {
   readonly children: React.ReactNode;
@@ -16,14 +17,16 @@ const queryClient = new QueryClient();
 export function Provider({ children }: ProviderProps) {
   return (
     <KBar>
-       <ThemeProvider attribute='class' defaultTheme='light' enableSystem>
-        <AuthProvider>
-          <QueryClientProvider client={queryClient}>
-            <NuqsAdapter>{children}</NuqsAdapter>
-            <ReactQueryDevtools initialIsOpen={false} />
-          </QueryClientProvider>
-        </AuthProvider>
-      </ThemeProvider>
+      <NavbarThemeProvider defaultTheme="default">
+        <ThemeProvider attribute='class' defaultTheme='light' enableSystem>
+          <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+              <NuqsAdapter>{children}</NuqsAdapter>
+              <ReactQueryDevtools initialIsOpen={false} />
+            </QueryClientProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </NavbarThemeProvider>
     </KBar>
   );
 }

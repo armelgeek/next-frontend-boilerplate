@@ -76,7 +76,11 @@ interface ContactInfo {
 }
 
 interface FooterProps {
-  variant?: "default" | "minimal" | "corporate" | "ecommerce" | "blog" | "startup" | "agency" | "saas";
+  variant?: 
+    | "default" | "minimal" | "corporate" | "ecommerce" | "blog" | "startup" 
+    | "agency" | "saas" | "creative" | "magazine" | "portfolio" | "landing"
+    | "tech" | "nonprofit" | "education" | "medical" | "restaurant"
+    | "travel" | "finance" | "gaming" | "music" | "fitness" | "luxury";
   logo?: {
     src?: string;
     text?: string;
@@ -355,6 +359,44 @@ export function Footer({
         return theme === "dark"
           ? "bg-gray-900 text-white border-t border-gray-800"
           : "bg-white border-t shadow-lg";
+      case 'creative':
+        return "bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 text-white";
+      case 'magazine':
+        return theme === "dark"
+          ? "bg-gray-800 text-white border-t-4 border-red-500"
+          : "bg-gray-100 border-t-4 border-red-500";
+      case 'portfolio':
+        return "bg-gradient-to-r from-gray-900 to-black text-white";
+      case 'landing':
+        return "bg-gradient-to-r from-indigo-900 via-blue-900 to-purple-900 text-white";
+      case 'tech':
+        return "bg-gradient-to-r from-slate-900 to-blue-900 text-white";
+      case 'nonprofit':
+        return theme === "dark"
+          ? "bg-green-900 text-white"
+          : "bg-green-50 border-t-2 border-green-500";
+      case 'education':
+        return theme === "dark"
+          ? "bg-blue-900 text-white"
+          : "bg-blue-50 border-t-2 border-blue-500";
+      case 'medical':
+        return theme === "dark"
+          ? "bg-teal-900 text-white"
+          : "bg-teal-50 border-t-2 border-teal-500";
+      case 'restaurant':
+        return "bg-gradient-to-r from-amber-900 to-orange-900 text-white";
+      case 'travel':
+        return "bg-gradient-to-r from-cyan-900 to-blue-900 text-white";
+      case 'finance':
+        return "bg-gradient-to-r from-emerald-900 to-teal-900 text-white";
+      case 'gaming':
+        return "bg-gradient-to-r from-purple-900 via-violet-900 to-indigo-900 text-white";
+      case 'music':
+        return "bg-gradient-to-r from-pink-900 to-purple-900 text-white";
+      case 'fitness':
+        return "bg-gradient-to-r from-red-900 to-orange-900 text-white";
+      case 'luxury':
+        return "bg-gradient-to-r from-yellow-900 via-amber-900 to-orange-900 text-white";
       default:
         return theme === "dark" 
           ? "bg-gray-900 text-white" 
@@ -422,7 +464,7 @@ export function Footer({
     );
   }
 
-  if (variant === 'startup' || variant === 'agency') {
+  if (variant === 'startup' || variant === 'agency' || variant === 'creative' || variant === 'portfolio' || variant === 'landing' || variant === 'tech' || variant === 'gaming' || variant === 'music' || variant === 'luxury') {
     return (
       <>
         <footer className={cn("w-full py-16", getVariantStyles(), className)}>
@@ -497,6 +539,306 @@ export function Footer({
                   {copyrightText || `© ${new Date().getFullYear()} Tous droits réservés.`}
                 </p>
               )}
+            </div>
+          </div>
+        </footer>
+        {showBackToTop && <BackToTop />}
+      </>
+    );
+  }
+
+  // Special magazine/blog variant
+  if (variant === 'magazine') {
+    return (
+      <>
+        <footer className={cn("w-full", getVariantStyles(), className)}>
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="py-12">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div className="md:col-span-2 space-y-6">
+                  <Logo logo={logo} />
+                  <p className={cn(
+                    "text-sm leading-relaxed",
+                    theme === "dark" ? "text-gray-300" : "text-gray-700"
+                  )}>
+                    {description}
+                  </p>
+                  
+                  {showNewsletter && (
+                    <div className="max-w-md">
+                      <NewsletterSubscription
+                        title="Newsletter"
+                        description="Recevez nos derniers articles"
+                        onSubmit={onNewsletterSubmit}
+                        theme={theme}
+                      />
+                    </div>
+                  )}
+                </div>
+                
+                {sections.slice(0, 2).map((section) => (
+                  <div key={section.title} className="space-y-4">
+                    <h3 className="font-bold text-sm uppercase tracking-wider text-red-600">
+                      {section.title}
+                    </h3>
+                    <ul className="space-y-2">
+                      {section.links.slice(0, 5).map((link) => (
+                        <li key={link.href}>
+                          <a
+                            href={link.href}
+                            className={cn(
+                              "text-sm transition-colors hover:text-red-600",
+                              theme === "dark" ? "text-gray-300" : "text-gray-600"
+                            )}
+                          >
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              
+              <div className={cn(
+                "pt-6 border-t flex flex-col md:flex-row items-center justify-between",
+                theme === "dark" ? "border-gray-700" : "border-gray-300"
+              )}>
+                <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      className="p-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                      aria-label={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
+                
+                {showCopyright && (
+                  <p className={cn(
+                    "text-sm",
+                    theme === "dark" ? "text-gray-400" : "text-gray-600"
+                  )}>
+                    {copyrightText || `© ${new Date().getFullYear()} Tous droits réservés.`}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        </footer>
+        {showBackToTop && <BackToTop />}
+      </>
+    );
+  }
+
+  // Special variants for specific industries
+  if (variant === 'restaurant' || variant === 'travel' || variant === 'fitness') {
+    return (
+      <>
+        <footer className={cn("w-full py-16", getVariantStyles(), className)}>
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              <div className="space-y-6">
+                <Logo logo={logo} />
+                <p className="text-white/90 leading-relaxed">
+                  {description}
+                </p>
+                
+                {contactInfo && (
+                  <div className="space-y-3 text-white/80">
+                    {contactInfo.address && (
+                      <div className="flex items-start space-x-2">
+                        <MapPin className="w-5 h-5 mt-0.5" />
+                        <span>{contactInfo.address}</span>
+                      </div>
+                    )}
+                    {contactInfo.phone && (
+                      <div className="flex items-center space-x-2">
+                        <Phone className="w-5 h-5" />
+                        <span>{contactInfo.phone}</span>
+                      </div>
+                    )}
+                    {contactInfo.hours && (
+                      <div className="flex items-center space-x-2">
+                        <Clock className="w-5 h-5" />
+                        <span>{contactInfo.hours}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {sections.slice(0, 2).map((section) => (
+                  <div key={section.title} className="space-y-4">
+                    <h3 className="font-bold text-white">
+                      {section.title}
+                    </h3>
+                    <ul className="space-y-2">
+                      {section.links.map((link) => (
+                        <li key={link.href}>
+                          <a
+                            href={link.href}
+                            className="text-white/80 hover:text-white transition-colors"
+                          >
+                            {link.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+
+              {showNewsletter && (
+                <div>
+                  <NewsletterSubscription
+                    title="Restez connecté"
+                    description="Recevez nos dernières actualités et offres spéciales"
+                    onSubmit={onNewsletterSubmit}
+                    theme="dark"
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className="mt-12 pt-8 border-t border-white/20 flex flex-col md:flex-row items-center justify-between">
+              <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                {socialLinks.map((social) => (
+                  <a
+                    key={social.name}
+                    href={social.href}
+                    className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
+                    aria-label={social.name}
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+              
+              {showCopyright && (
+                <p className="text-white/70 text-sm">
+                  {copyrightText || `© ${new Date().getFullYear()} Tous droits réservés.`}
+                </p>
+              )}
+            </div>
+          </div>
+        </footer>
+        {showBackToTop && <BackToTop />}
+      </>
+    );
+  }
+
+  // Special variants for professional services
+  if (variant === 'nonprofit' || variant === 'education' || variant === 'medical' || variant === 'finance') {
+    const accentColor = variant === 'nonprofit' ? 'green' : 
+                       variant === 'education' ? 'blue' :
+                       variant === 'medical' ? 'teal' : 'emerald';
+    
+    return (
+      <>
+        <footer className={cn("w-full py-12", getVariantStyles(), className)}>
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              <div className="md:col-span-2 space-y-6">
+                <Logo logo={logo} />
+                <p className={cn(
+                  "leading-relaxed",
+                  theme === "dark" ? "text-white/90" : "text-gray-700"
+                )}>
+                  {description}
+                </p>
+                
+                <div className="flex items-center space-x-3">
+                  {socialLinks.map((social) => (
+                    <a
+                      key={social.name}
+                      href={social.href}
+                      className={cn(
+                        "p-2 rounded-lg transition-colors",
+                        theme === "dark" 
+                          ? "bg-white/10 hover:bg-white/20"
+                          : `bg-${accentColor}-100 hover:bg-${accentColor}-200 text-${accentColor}-700`
+                      )}
+                      aria-label={social.name}
+                    >
+                      {social.icon}
+                    </a>
+                  ))}
+                </div>
+
+                {contactInfo && (
+                  <div className="space-y-2">
+                    {contactInfo.address && (
+                      <div className="flex items-start space-x-2 text-sm">
+                        <MapPin className="w-4 h-4 mt-0.5" />
+                        <span>{contactInfo.address}</span>
+                      </div>
+                    )}
+                    {contactInfo.phone && (
+                      <div className="flex items-center space-x-2 text-sm">
+                        <Phone className="w-4 h-4" />
+                        <span>{contactInfo.phone}</span>
+                      </div>
+                    )}
+                    {contactInfo.email && (
+                      <div className="flex items-center space-x-2 text-sm">
+                        <Mail className="w-4 h-4" />
+                        <span>{contactInfo.email}</span>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {sections.slice(0, 2).map((section) => (
+                <div key={section.title} className="space-y-4">
+                  <h3 className={cn(
+                    "font-semibold text-sm uppercase tracking-wider",
+                    theme === "dark" ? "text-white" : `text-${accentColor}-800`
+                  )}>
+                    {section.title}
+                  </h3>
+                  <ul className="space-y-3">
+                    {section.links.map((link) => (
+                      <li key={link.href}>
+                        <a
+                          href={link.href}
+                          className={cn(
+                            "text-sm transition-colors",
+                            theme === "dark" 
+                              ? "text-white/80 hover:text-white"
+                              : `text-gray-600 hover:text-${accentColor}-600`
+                          )}
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+
+            <div className={cn(
+              "mt-8 pt-6 border-t",
+              theme === "dark" ? "border-white/20" : "border-gray-200"
+            )}>
+              <div className="flex flex-col md:flex-row items-center justify-between">
+                {showTrustBadges && <TrustBadges />}
+                
+                {showCopyright && (
+                  <p className={cn(
+                    "text-sm mt-4 md:mt-0",
+                    theme === "dark" ? "text-white/70" : "text-gray-500"
+                  )}>
+                    {copyrightText || `© ${new Date().getFullYear()} Tous droits réservés.`}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         </footer>

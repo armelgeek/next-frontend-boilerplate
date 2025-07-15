@@ -17,6 +17,19 @@ export { ContactSection } from "./contact-section";
 export { StatsSection } from "./stats-section";
 export { PartnersSection } from "./partners-section";
 
+// Advanced sections (10 additional components)
+export { FAQSection } from "./faq-advanced-section";
+export { KnowledgeBaseSection } from "./knowledge-base-section";
+export { NewsSection } from "./news-section";
+export { MediaSection } from "./media-section";
+export { EventsSection as EventsAdvancedSection } from "./events-advanced-section";
+export { ProfilesSection } from "./profiles-section";
+export { ComparisonsSection } from "./comparisons-section";
+export { LearningSection } from "./learning-section";
+export { FinanceSection } from "./finance-section";
+export { NotificationSection } from "./notifications-section";
+export { ToolsSection } from "./tools-section";
+
 // Navigation et layout
 export { Navbar } from "./navbar";
 export { Footer } from "./footer";
